@@ -1,8 +1,8 @@
 <?php
 $idTiket = $_GET['detail'];
-$q = mysql_query("select * from tiket where idTiket ='$idTiket'")
+$q = mysqli_query($conn,"select * from tiket where idTiket ='$idTiket'")
      ;
-$a = mysql_fetch_array($q);
+$a = mysqli_fetch_array($q);
 ?>
 <center>
     <table class="table" style="width: 50%;">

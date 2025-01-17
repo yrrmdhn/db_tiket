@@ -9,8 +9,8 @@
             <th colspan="2">Aksi</th>
        </tr>
           <?php
-             $q = mysql_query("select * from tiket");
-             while($a = mysql_fetch_array($q)){
+             $q = mysqli_query($conn,"select * from tiket");
+             while($a = mysqli_fetch_array($q)){
             ?>
         <tr>
             <td><?= $a['kodeTiket']?></td>
@@ -29,7 +29,7 @@
 <?php
     if(isset($_GET['hapus'])){
         $idTiket = $_GET['hapus'];
-        $q = mysql_query("delete from tiket where idTiket='$idTiket'");
+        $q = mysqli_query($conn,"delete from tiket where idTiket='$idTiket'");
         if($q){
             echo say("Berhasil dihapus","Index.php?act=data-tiket");
 

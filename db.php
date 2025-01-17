@@ -1,6 +1,6 @@
 <?php
-    $conn = mysql_connect('localhost','root','');
-    $select = mysql_select_db('tiket');
+    $conn = mysqli_connect("localhost", "root", "", "tiket");
+
 
     session_start();
 
@@ -13,4 +13,3 @@
 
     }
 ?>
-

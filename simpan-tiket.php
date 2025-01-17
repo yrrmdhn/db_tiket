@@ -1,6 +1,4 @@
 <?php
-include 'db.php';
-
 $kodeTiket = $_POST['kodeTiket'];
 $kodePesawat = $_POST['kodePesawat'];
 $namaPembeli = $_POST['namaPembeli'];
@@ -12,17 +10,41 @@ $waktuSampai = $_POST['waktuSampai'];
 $harga = $_POST['harga'];
 $noKursi = $_POST['noKursi'];
 $kelas = $_POST['kelas'];
-$total = $harga;
+$total = $harga; // Assuming total is the same as harga
 
-$q= mysql_query("insert into tiket values(NULL, '$kodeTiket', '$kodePesawat',
-'$namaPembeli', '$berangkat', '$tujuan', '$tglBerangkat', '$waktuBerangkat',
- '$waktuSampai', '$harga', '$noKursi', '$kelas', '$total')");
-if($q){
+// Validate input (optional, but recommended)
+if (empty($kodeTiket) || empty($kodePesawat) || empty($namaPembeli)) {
+    die("Error: Required fields are missing.");
+}
 
-    $p = mysql_query("insert into transaksi values(NULL, '$kodeTiket',
-    '$total')");
-    if($p){
-    echo say("Berhasil", "index.php?act=data-tiket");
+// Use prepared statements to prevent SQL injection
+$stmt = $conn->prepare("INSERT INTO tiket 
+    (`kodeTiket`, `kodePesawat`, `namaPembeli`, `berangkat`, `tujuan`, `tglBerangkat`, `waktuBerangkat`, `waktuSampai`, `harga`, `noKursi`, `kelas`, `total`) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+$stmt->bind_param(
+    "", 
+    $kodeTiket, 
+    $kodePesawat, 
+    $namaPembeli, 
+    $berangkat, 
+    $tujuan, 
+    $tglBerangkat, 
+    $waktuBerangkat, 
+    $waktuSampai, 
+    $harga, 
+    $noKursi, 
+    $kelas, 
+    $total
+);
+
+// Execute query and check for errors
+if ($stmt->execute()) {
+    echo "Data successfully inserted.";
+} else {
+    echo "Error: " . $stmt->error;
 }
-}
+
+// Close the statement and connection
+$stmt->close();
+$conn->close();
 ?>
