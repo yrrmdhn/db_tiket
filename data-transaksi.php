@@ -5,9 +5,10 @@
             <th>Total</th>
        </tr>
           <?php
-            $q = mysql_query("select * from transaksi");
-            while($a = mysql_fetch_array($q)){
-                @$total = $total + $a['total'];
+            $total  = 0;
+            $q = mysqli_query($conn, "select * from transaksi");
+            while($a = mysqli_fetch_array($q)){
+                $total = $total + $a['total'];
             ?>
         <tr>
             <td><?= $a['kodeTiket']?></td>
